@@ -4,4 +4,4 @@
 
 3.python3 -s 搜索内容 -n 下载的数目
 
-eg： pyt
+eg： pytthon3 -s tomcat -n 1000
