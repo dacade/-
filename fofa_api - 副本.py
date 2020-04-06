@@ -71,6 +71,24 @@ def fofa_work(fofa_search,size):
             lastupdatetimes.append(lastupdatetime)
         now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
         datess=pd.DataFrame({'ip':ips,'host':hosts,'port':ports,'domain':domains,'title':titles,'country':countrys,'province':provinces,'city':cities,'country_name':country_names,'server':servers,'protocol':protocols,'lastupdatetime':lastupdatetimes})
+                if ':' in fofa_search:
+            fofa_search = fofa_search.replace(':', '：')
+        if '?' in fofa_search:
+            fofa_search = fofa_search.replace('?', '？')
+        if '<' in fofa_search:
+            fofa_search = fofa_search.replace('<', '《')
+        if '>' in fofa_search:
+            fofa_search = fofa_search.replace('>', '》')
+        if '\\' in fofa_search:
+            fofa_search = fofa_search.replace('\\', '。')
+        if '/' in fofa_search:
+            fofa_search = fofa_search.replace('/', '。')
+        if '|' in fofa_search:
+            fofa_search = fofa_search.replace('|', '。')
+        if '*' in fofa_search:
+            fofa_search = fofa_search.replace('*', '。')
+        if '"' in fofa_search:
+            fofa_search = fofa_search.replace('"', '\'')
         datess.to_csv(f'{now}'+'('+f'{fofa_search}'+').csv',encoding='utf_8_sig')
         stop=time.time()
         timess=stop-start
@@ -87,7 +105,7 @@ if __name__ == '__main__':
     }
     parser = argparse.ArgumentParser(description='FOFA API下载')
     parser.add_argument('-s','--fofa_search',help='FOFA 查询语句')
-    parser.add_argument('-n', '--size', help='每页数量，默认为 10000', type=int, default=10)
+    parser.add_argument('-n', '--size', help='每页数量，fofa默认为 10000，使用该脚本时必须添加-n参数指定数目', type=int, default=10)
     args = parser.parse_args()
     size=args.size
     fofa_search = args.fofa_search
